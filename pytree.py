@@ -6,7 +6,7 @@ import re
 
 
 def sort_key(s):
-    return re.sub('[^A-Za-z]+', '', s).lower()
+    return re.sub('[^A-Za-z0-9]+', '', s).lower()
 
 
 def get_items(path):
@@ -23,7 +23,7 @@ def print_tree(path, count, indent=''):
         count[1] = count[1] + 1
         if i == len(items) - 1:
             print(indent + '└── ' + files)
-            sub_indent = '   '
+            sub_indent = '    '
         else:
             print(indent + '├── ' + files)
             sub_indent = '│   '
