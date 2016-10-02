@@ -2,30 +2,31 @@
 
 import sys
 import os
+import re
 
 
+def sort_key(s):
+    return re.sub('[^A-Za-z]+', '', s).lower()
 
 def print_tree(path, count, indent=''):
     items = os.listdir(path)
     items = [item for item in items if item[0] != '.']
+    items = sorted(items, key = sort_key)
+    
     for i, files in enumerate(items):
         fullpath = path + "/" + files
         count[1] = count[1] + 1
-        sign = 0
-        if i == len(items) - 1: 
-            sign = 1 
-        if sign == 1:
+        if i == len(items) - 1:
             print(indent + '└── ' + files)
+            sub_indent = '   '
         else:
             print(indent + '├── ' + files)
+            sub_indent = '│   '
         if os.path.isdir(fullpath):
             count[0] = count[0] + 1
-            if sign == 1:
-                print_tree(fullpath, count, indent + '   ')
-            else:
-                print_tree(fullpath, count, indent + '│   ')
+            print_tree(fullpath, count, indent + sub_indent)
 
-
+            
 if __name__ == '__main__':
     if (len(sys.argv) == 1):
         dirname = "."
