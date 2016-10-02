@@ -4,22 +4,27 @@ import sys
 import os
 
 
+
 def print_tree(path, count, indent=''):
     items = os.listdir(path)
     items = [item for item in items if item[0] != '.']
     for i, files in enumerate(items):
         fullpath = path + "/" + files
         count[1] = count[1] + 1
-        if i == len(items) - 1:
-            print(indent + '`-- ' + files)
-            if os.path.isdir(fullpath):
-                print_tree(fullpath, count, indent + '   ')
-                count[0] = count[0] + 1
+        sign = 0
+        if i == len(items) - 1: 
+            sign = 1 
+        if sign == 1:
+            print(indent + '└── ' + files)
         else:
-            print(indent + '|-- ' + files)
-            if os.path.isdir(fullpath):
-                print_tree(fullpath, count, indent + '|   ')
-                count[0] = count[0] + 1
+            print(indent + '├── ' + files)
+        if os.path.isdir(fullpath):
+            count[0] = count[0] + 1
+            if sign == 1:
+                print_tree(fullpath, count, indent + '   ')
+            else:
+                print_tree(fullpath, count, indent + '│   ')
+
 
 if __name__ == '__main__':
     if (len(sys.argv) == 1):
