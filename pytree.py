@@ -8,16 +8,16 @@ def print_tree(path, count, indent=''):
   for i, files in enumerate(items):
     fullpath = path + "/" + files
     if i == len(items) - 1:
-      print(indent + '`-- ' + files)
+      print(indent + '└── ' + files)
       count[1] = count[1] + 1
       if os.path.isdir(fullpath):
         print_tree(fullpath, count, indent+'   ')
         count[0] = count[0] + 1
     else:
-      print(indent + '|-- ' + files)
+      print(indent + '├── ' + files)
       count[1] = count[1] + 1
       if os.path.isdir(fullpath):
-        print_tree(fullpath, count, indent+'|   ')
+        print_tree(fullpath, count, indent+'│   ')
         count[0] = count[0] + 1
 
 if __name__ == '__main__' :
